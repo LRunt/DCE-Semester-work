@@ -1,0 +1,13 @@
+services:
+  devel:
+    build:
+      context: .
+      dockerfile: Dockerfile.devel
+    volumes:
+      - ../..:/workspaces
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.backend 
+    ports:
+      - "8000:8000"

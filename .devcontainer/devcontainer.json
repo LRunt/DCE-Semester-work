@@ -1,0 +1,6 @@
+{
+    "name": "DCE Semester work",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "devel",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
+}

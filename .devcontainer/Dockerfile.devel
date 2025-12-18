@@ -1,0 +1,9 @@
+FROM almalinux:9.5
+
+RUN dnf install -y procps
+RUN dnf install -y net-tools
+RUN dnf install -y postgresql
+
+CMD sleep infinity
+
+
