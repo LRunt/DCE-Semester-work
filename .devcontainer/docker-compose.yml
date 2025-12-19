@@ -5,6 +5,16 @@ services:
       dockerfile: Dockerfile.devel
     volumes:
       - ../..:/workspaces
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend 
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - frontend-network
   backend:
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgresqldb:5432/${POSTGRES_DB}
