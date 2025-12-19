@@ -30,7 +30,12 @@ import czechia from '../assets/images/flags/czech-republic.png';
               <router-link class="nav-link" to="/#work-experience">{{ $t('navbar.workExperience') }}</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/#education">{{ $t('navbar.education') }}</router-link>
+              <router-link class="nav-link" to="/#education">{{ $t('navbar.education') }}
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/sport">{{ $t('navbar.sport') }}
+              </router-link>
             </li>
 
             <!-- Language switch for mobile phones -->  

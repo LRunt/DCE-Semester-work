@@ -3,19 +3,15 @@ import { ref, watch } from 'vue'
 const isDark = ref(false)
 
 export function useTheme() {
-  // Načti z localStorage
   const savedTheme = localStorage.getItem('theme')
   if (savedTheme) {
     isDark.value = savedTheme === 'dark'
   } else {
-    // Detekuj systémové nastavení
     isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
   }
 
-  // Aplikuj theme při načtení
   applyTheme()
 
-  // Sleduj změny
   watch(isDark, () => {
     applyTheme()
     localStorage.setItem('theme', isDark.value ? 'dark' : 'light')

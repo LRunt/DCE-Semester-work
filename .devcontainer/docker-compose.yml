@@ -21,8 +21,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.backend 
-    ports:
-      - "8000:8000"
     depends_on:
       - postgresqldb
     networks:

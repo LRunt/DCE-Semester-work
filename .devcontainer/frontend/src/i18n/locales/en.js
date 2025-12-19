@@ -3,6 +3,8 @@ export default {
         brand: 'Lukáš Runt',
         workExperience: 'Work Experience',
         education: 'Education',
+        projects: 'Projects',
+        sport: 'Sport',
         lightMode: 'Light Mode',
         darkMode: 'Dark Mode',
     },
