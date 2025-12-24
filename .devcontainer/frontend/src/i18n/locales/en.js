@@ -37,5 +37,8 @@ export default {
         title: 'My Projects',
         personalProjects: 'Personal projects',
         schoolProjects: 'School projects',
+    },
+    sport: {
+        title: 'Sport Results'
     }
 }

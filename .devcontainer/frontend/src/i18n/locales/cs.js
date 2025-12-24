@@ -39,5 +39,8 @@ export default {
         title: 'Moje projekty',
         personalProjects: 'Osobní projekty',
         schoolProjects: 'Školní projekty',
+    },
+    sport: {
+        title: 'Sportovní výsledky'
     }
 }

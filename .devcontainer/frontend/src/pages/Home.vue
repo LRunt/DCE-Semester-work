@@ -6,7 +6,7 @@ import Education from '../components/Education.vue';
 
 <template>
   <AboutMe></AboutMe>
-    <div class="resume-section">
+    <div class="content-body">
       <hr>
       <Expirience></Expirience>
       <hr>

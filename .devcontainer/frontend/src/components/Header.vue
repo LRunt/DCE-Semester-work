@@ -1,6 +1,6 @@
 <script setup>
   import { useTheme } from '@/composables/useThemes';
-import czechia from '../assets/images/flags/czech-republic.png';
+  import czechia from '../assets/images/flags/czech-republic.png';
   import unitedKingdom from '../assets/images/flags/united-kingdom.png';
   import { useI18n } from 'vue-i18n'
 

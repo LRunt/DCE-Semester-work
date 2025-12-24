@@ -11,7 +11,7 @@ useI18n();
         <div class="row g-4">
             <div class="col-12 col-md-6">
                 <div class="p-4 intro">
-                    <h2 class="about-me-title">{{ $t('aboutMe.title') }}</h2>
+                    <h2 class="title">{{ $t('aboutMe.title') }}</h2>
                     <p class="about-me">{{ $t('aboutMe.content') }}</p>
                 </div>
             </div>
