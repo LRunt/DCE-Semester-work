@@ -10,7 +10,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.frontend 
     ports:
-      - "5173:5173"
+      - "8080:5173"
     depends_on:
       - backend
     networks:
@@ -21,6 +21,8 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.backend 
+    deploy:
+      replicas: 3
     depends_on:
       - postgresqldb
     networks:
