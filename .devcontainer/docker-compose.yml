@@ -1,51 +1,15 @@
+version: "3"
 services:
-  devel:
-    build:
-      context: .
-      dockerfile: Dockerfile.devel
+  iac-dev-container:
+    container_name: IaCDevContainer
+    #build:
+    #  context: .
+    #   dockerfile: Dockerfile
+    image: ghcr.io/maxotta/iac-development-container:v1.09
     volumes:
-      - ../..:/workspaces
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.frontend 
-    ports:
-      - "8080:5173"
-    depends_on:
-      - backend
-    networks:
-      - frontend-network
-  backend:
-    environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgresqldb:5432/${POSTGRES_DB}
-    build:
-      context: ./backend
-      dockerfile: Dockerfile.backend 
-    deploy:
-      replicas: 3
-    depends_on:
-      - postgresqldb
-    networks:
-      - backend-network
-      - frontend-network
-  postgresqldb:
-    image: postgres
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    networks:
-      - backend-network
-    volumes:
-      - pgdata:/var/lib/postgresql
-      - ./setup/init_script.sql:/docker-entrypoint-initdb.d/init_script.sql:ro
-
-networks:
-  backend-network:
-    driver: bridge
-  frontend-network:
-    driver: bridge
-
+      - "iac-dev-container-data:/var/iac-dev-container-data"
+      - "../..:/workspace"
 volumes:
-  pgdata:
-    
+  iac-dev-container-data:
+    external: false
+
