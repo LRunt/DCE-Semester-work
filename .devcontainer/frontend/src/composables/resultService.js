@@ -17,7 +17,7 @@ export function getResults() {
       results.value = await fetchAllResults();
     } catch (err) {
       error.value = err.message;
-      console.error("Chyba v useResults:", err);
+      console.error("Error in getResults:", err);
     } finally {
       loading.value = false;
     }

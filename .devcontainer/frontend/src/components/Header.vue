@@ -34,6 +34,10 @@
               </router-link>
             </li>
             <li class="nav-item">
+              <router-link class="nav-link" to="/projects">{{ $t('navbar.projects') }}
+              </router-link>
+            </li>
+            <li class="nav-item">
               <router-link class="nav-link" to="/sport">{{ $t('navbar.sport') }}
               </router-link>
             </li>
