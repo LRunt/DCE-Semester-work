@@ -41,6 +41,11 @@ export default {
         schoolProjects: 'Školní projekty',
     },
     sport: {
-        title: 'Sportovní výsledky'
+        title: 'Sportovní výsledky',
+        table: {
+            date: 'Datum',
+            name: 'Název',
+            position: 'Pozice',
+        }
     }
 }

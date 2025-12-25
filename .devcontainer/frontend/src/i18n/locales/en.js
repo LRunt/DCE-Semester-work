@@ -39,6 +39,11 @@ export default {
         schoolProjects: 'School projects',
     },
     sport: {
-        title: 'Sport Results'
+        title: 'Sport Results',
+        table: {
+            date: 'Date',
+            name: 'Name',
+            position: 'Position',
+        }
     }
 }
