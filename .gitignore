@@ -53,3 +53,7 @@ Thumbs.db
 *.pem
 *.key
 
+# Other
+.vscode*
+.terraform*
+

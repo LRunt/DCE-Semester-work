@@ -17,10 +17,19 @@ provider "opennebula" {
   password      = "${var.opennebula_token}"
 }
 
+# Resource (OS image) definition:
+resource "opennebula_image" "os-image" {
+    name = "${var.vm_image_name}"
+    datastore_id = "${var.vm_imagedatastore_id}"
+    persistent = false
+    path = "${var.vm_image_url}"
+    permissions = "600"
+}
+
 # Resource (VM) definition:
 resource "opennebula_virtual_machine" "vmnode" {
   count = var.vm_count
-  name = "vmnode-${count.index + 1}"
+  name = "${var.vm_machine_name}-${count.index + 1}"
   description = "Main node VM"
   cpu = 1
   vcpu = 1
@@ -39,7 +48,7 @@ resource "opennebula_virtual_machine" "vmnode" {
     boot = "disk0"
   }
   disk {
-    image_id = 687 #opennebula_image.os-image.id
+    image_id = opennebula_image.os-image.id
     target   = "vda"
     size     = 12000 # 12GB
   }
@@ -49,7 +58,7 @@ resource "opennebula_virtual_machine" "vmnode" {
   }
   # The Network Interface Controller is connected to 'vlan173' network (147.228.173.0/24) which has ID = 3
   nic {
-    network_id = 3
+    network_id = var.vm_network_id
   }
 
   connection {
@@ -60,8 +69,22 @@ resource "opennebula_virtual_machine" "vmnode" {
   }
 
   provisioner "file" {
-    source = "myconfig.conf"
-    destination = "/etc/myconfig.conf"
+    source = "init-scripts/"
+    destination = "/tmp"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "export INIT_USER=${var.vm_admin_user}",
+      "export INIT_PUBKEY='${var.ssh_public_key}'",
+      "export INIT_LOG=${var.vm_node_init_log}",
+      "export INIT_HOSTNAME=${self.name}",
+      "touch ${var.vm_node_init_log}",
+      "sh /tmp/init-start.sh",
+      "sh /tmp/init-node.sh",
+      "sh /tmp/init-users.sh",
+      "sh /tmp/init-finish.sh"
+    ]
   }
 }
 
@@ -71,15 +94,25 @@ output "vm_nodes_ips" {
   value = opennebula_virtual_machine.vmnode.*.ip
 }
 
-#output "vm_node_1_mac" {
-#  value = opennebula_virtual_machine.vmnode.*.nic[0].computed_mac
-#}
-
 resource "local_file" "host_inventory" {
-  content =  templatefile("host-inventory.template", {
+  content = templatefile("inventory.template",
+  {
+    vm_admin_user = var.vm_admin_user,
     ip_list = opennebula_virtual_machine.vmnode.*.ip
   })
-  filename = "host-inventory.yaml"
+  filename = "ansible/inventory.yml"
+}
+
+resource "null_resource" "ansible-provisioner" {
+  provisioner "local-exec" {
+    # Start provisioning all nodes:
+    command = "ansible-playbook -i inventory.yml site.yml"
+    working_dir = "${path.module}/ansible"
+    environment = {
+      ANSIBLE_HOST_KEY_CHECKING = "False"
+    }
+  }
+  depends_on = [local_file.host_inventory]
 }
 
 #

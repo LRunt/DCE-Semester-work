@@ -1,0 +1,17 @@
+- name: Creating dir for application
+  ansible.builtin.file:
+    path: /opt/personal-website
+    state: directory
+    mode: '0755'
+
+- name: Copy source code on vm 
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../src"
+    dest: /opt/personal-website/
+    mode: '0755'
+
+- name: Running docker compose
+  community.docker.docker_compose_v2:
+    project_src: /opt/personal-website/src/
+    state: present
+
